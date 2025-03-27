@@ -8,7 +8,7 @@
 #define DHTPIN 6          // Chân kết nối cảm biến DHT11
 #define DHTTYPE DHT11     // Loại cảm biến DHT11
 #define SD_CS 10          // Chân Chip Select của module SD
-#define FILENAME "log.txt" // Tên file ghi dữ liệu
+#define FILENAME "minh.txt" // Tên file ghi dữ liệu
 
 RTC_DS1307 rtc;  // Đối tượng RTC
 DHT dht(DHTPIN, DHTTYPE); // Đối tượng cảm biến DHT11
@@ -43,6 +43,14 @@ void setup() {
     if (!SD.begin(SD_CS)) {
         Serial.println("❌ Không tìm thấy module SD!");
         while (1);
+    }
+
+    // Xóa dữ liệu cũ trước khi bắt đầu ghi mới
+    dataFile = SD.open(FILENAME, FILE_WRITE);
+    if (dataFile) {
+        dataFile.close();
+        SD.remove(FILENAME); // Xóa file cũ
+        Serial.println("🗑 Dữ liệu cũ đã được xóa!");
     }
     
     Serial.println("✅ Hệ thống đã sẵn sàng.");
@@ -104,20 +112,3 @@ void loop() {
 
     delay(10000); // Đợi 10 giây trước khi ghi lần tiếp theo
 }
-
-//Bước 1: Kết nối cảm biến DHT11
-//VCC (chân 1) → 5V trên Arduino.
-//GND (chân 4) → GND trên Arduino.
-//DATA (chân 2) → D6 trên Arduino.
-//Bước 2: Kết nối module RTC DS1307
-//VCC → 5V trên Arduino.
-//GND → GND trên Arduino.
-//SDA → A4 trên Arduino.
-//SCL → A5 trên Arduino.
-//Bước 3: Kết nối module thẻ SD
-//VCC → 5V trên Arduino.
-//GND → GND trên Arduino.
-//MISO → D12 trên Arduino.
-//MOSI → D11 trên Arduino.
-//SCK → D13 trên Arduino.
-//CS → D10 trên Arduino.

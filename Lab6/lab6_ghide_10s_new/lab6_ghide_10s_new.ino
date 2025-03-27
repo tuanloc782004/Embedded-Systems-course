@@ -44,6 +44,10 @@ void setup() {
         Serial.println("❌ Không tìm thấy module SD!");
         while (1);
     }
+
+    // 🗑 Xóa dữ liệu cũ trước khi ghi mới
+    Serial.println("🗑 Xóa dữ liệu cũ...");
+    SD.remove(FILENAME);
     
     Serial.println("✅ Hệ thống đã sẵn sàng.");
 }

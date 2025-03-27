@@ -10,7 +10,7 @@
 #define DHTPIN 6
 #define DHTTYPE DHT11
 #define SD_CS 10
-#define FILENAME "minh.txt"
+#define FILENAME "log.txt"
 
 RTC_DS1307 rtc;
 DHT dht(DHTPIN, DHTTYPE);
